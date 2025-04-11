@@ -1,0 +1,1 @@
+module github.com/windyy10/trpc-go-tools
