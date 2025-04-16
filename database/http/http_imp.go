@@ -36,10 +36,14 @@ func (h *httpProxyImp) Post(ctx context.Context, reqbody interface{}, rspbody in
 	reqHeader *ReqHeader, opts ...client.Option) error {
 
 	header := &thttp.ClientReqHeader{
-		Schema:  h.u.Scheme,
-		Host:    h.u.Host,
-		ReqBody: reqHeader.Body,
+		Schema: h.u.Scheme,
+		Host:   h.u.Host,
 	}
+	// 支持自定义的urlencoded编码
+	if reqHeader != nil {
+		header.ReqBody = reqHeader.Body
+	}
+
 	// 添加header, 按照默认值->规范值->自定义顺序添加
 	for k, v := range h.headers {
 		header.AddHeader(k, v)
